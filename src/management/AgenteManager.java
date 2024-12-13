@@ -46,14 +46,33 @@ public class AgenteManager {
             System.out.println("\n=== Menú Agentes ===");
             System.out.println("1. Registrar Agente");
             System.out.println("2. Mostrar Agentes");
-            System.out.println("3. Salir");
+            System.out.println("3. Aumentar Nivel");
+            System.out.println("4. Salir");
             int opcion = ConsoleUtils.leerEntero("Seleccione una opción: ");
-            ConsoleUtils.limpiarBuffer(); // Consumir cualquier salto de línea residual
-
+    
             switch (opcion) {
                 case 1 -> registrarAgente();
-                case 2 -> mostrarAgentes();
-                case 3 -> continuar = false;
+                case 2 -> mostrarAgentes();                
+                case 3 -> {
+                    if (agentes.isEmpty()) {
+                        System.out.println("No hay agentes registrados.");
+                        break;
+                    }
+                    System.out.println("Seleccione un agente para incrementar su nivel:");
+                    for (int i = 0; i < agentes.size(); i++) {
+                        System.out.println((i + 1) + ". " + agentes.get(i));
+                    }
+                    int indiceAgente = ConsoleUtils.leerEntero("Ingrese el número del agente: ");
+                    ConsoleUtils.limpiarBuffer();
+                    if (indiceAgente > 0 && indiceAgente <= agentes.size()) {
+                        Agente agente = agentes.get(indiceAgente - 1);
+                        agente.incrementarNivel();
+                        System.out.println("Nivel del agente incrementado con éxito.");
+                    } else {
+                        System.out.println("Opción no válida.");
+                    }
+                }
+                case 4 -> continuar = false;
                 default -> System.out.println("Opción no válida.");
             }
         }
